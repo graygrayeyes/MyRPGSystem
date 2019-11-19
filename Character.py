@@ -74,6 +74,7 @@ class Body_Part:
         self.type = type # 'H', 'LA', 'RA', 'B', 'LL', 'RL'
         self.max_health = self.compute_max_health(toughness_bonus)
         self.current_health = self.max_health
+        self.critical_injurys = [False, False, False, False]
 
     def update_part(self, toughness_bonus):
         self.max_health = self.compute_max_health(toughness_bonus)
@@ -86,6 +87,15 @@ class Body_Part:
             return health_range_body[toughness_bonus]
         else: # H, RA, LA, LL, RL
             return health_range_other_parts[toughness_bonus]
+
+    def get_hit_or_heal(self, damage):
+        self.current_health = self.current_health + damage
+        if (self.current_health <= 0):
+            self.critical_injurys[self.current_health*(-1)] = True
+        if (self.current_health < -2):
+            self.current_health = -2
+        elif (self.current_health > self.max_health):
+            self.current_health = self.max_health
 
 
 if __name__ == ("__main__"):
