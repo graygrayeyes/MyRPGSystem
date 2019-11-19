@@ -3,7 +3,7 @@ from Common_Consts import *
 from Skills_Talents_Traits import *
 
 class Character:
-    def __init__(self, characteristics, skills, talents):
+    def __init__(self, characteristics, skills, talents, equipment):
         # Set characteristics, skills, talents
         self.skills = {}
         self.talents = set()
@@ -27,11 +27,18 @@ class Character:
             print(self.talents)
 
         # Set health
-            self.compute_max_health()
-            self.set_current_health_to_max()
-            if (debug_flag):
-                for key in self.current_health:
-                    print(key, ':', self.current_health[key])
+        self.compute_max_health()
+        self.set_current_health_to_max()
+        if (debug_flag):
+            for key in self.current_health:
+                print(key, ':', self.current_health[key])
+
+        # Set equipment
+        self.equipment = {'H': equipment['H'],
+                          'B': equipment['B'],
+                          'L': equipment['L'],
+                          'LA': equipment['LA'],
+                          'RA': equipment['RA']}
 
     def compute_max_health(self):
         T_bonus = self.compute_chr_bonus('T')
@@ -59,15 +66,38 @@ class Character:
     def compute_chr_bonus(self, chr_name):
         return int(self.characteristics[chr_name]/10)
 
-class Inventory:
-    def __init__(self):
+# class Health:
+#     def __init__(self, toughness_bonus):
+
+class Body_Part:
+    def __init__(self, type, toughness_bonus):
+        self.type = type # 'H', 'LA', 'RA', 'B', 'LL', 'RL'
+        self.max_health = self.compute_max_health(toughness_bonus)
+        self.current_health = self.max_health
+
+    def update_part(self, toughness_bonus):
+        self.max_health = self.compute_max_health(toughness_bonus)
+        self.current_health = self.max_health
+
+    def compute_max_health(self, toughness_bonus):
+        health_range_body = [2, 3, 4, 5, 6, 7]
+        health_range_other_parts = [1, 1, 2, 3, 4, 5]
+        if(self.type == 'B'):
+            return health_range_body[toughness_bonus]
+        else: # H, RA, LA, LL, RL
+            return health_range_other_parts[toughness_bonus]
 
 
 if __name__ == ("__main__"):
     characteristics_0 = {'S': 25, 'A': 25, 'T': 25, 'P': 25, 'I': 25, 'WP': 25, 'C': 25}
     skills_0 = {"melee_strength": 10, "melee_agility": 10, "shield": 15, "parry": 15, "dodge": -20}
     talents_0 = set(["quick_strike", "battle dance"])
-    test_charatcer = Character(characteristics_0, skills_0, talents_0)
+    equipment_0 = {'H': 'none',
+                 'B': 'none',
+                 'L': 'none',
+                 'LA': 'none',
+                 'RA': 'none'}
+    test_charatcer = Character(characteristics_0, skills_0, talents_0, equipment_0)
 
 
 
