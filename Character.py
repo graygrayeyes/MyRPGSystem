@@ -5,7 +5,7 @@ from Skills_Talents_Traits import *
 class Character:
     def __init__(self, characteristics, skills, talents, equipment):
         # Set characteristics, skills, talents
-        self.skills = {}
+        self.skills = Skills_Set(skills)
         self.talents = set()
         self.characteristics = {'S': characteristics['S'], # strength
                                 'A': characteristics['A'], # agility
@@ -15,8 +15,9 @@ class Character:
                                 'WP': characteristics['WP'], # will_power
                                 'C': characteristics['C']} # charisma
 
-        for key, value in skills.items():
-            self.skills[key] = value
+
+        # for key, value in skills.items():
+        #     self.skills[key] = value
 
         self.talents = self.talents | talents
 
@@ -40,57 +41,62 @@ class Character:
                           'LA': equipment['LA'],
                           'RA': equipment['RA']}
 
-    def compute_max_health(self):
-        T_bonus = self.compute_chr_bonus('T')
-        if (T_bonus == 0):
-            self.max_health = {'H': 1, 'LA': 1, 'RA': 1, 'B': 2, 'LL': 1, 'RL': 1}
-        elif (T_bonus == 1):
-            self.max_health = {'H': 1, 'LA': 1, 'RA': 1, 'B': 3, 'LL': 1, 'RL': 1}
-        elif (T_bonus == 2):
-            self.max_health = {'H': 2, 'LA': 2, 'RA': 2, 'B': 4, 'LL': 2, 'RL': 2}
-        elif (T_bonus == 3):
-            self.max_health = {'H': 3, 'LA': 3, 'RA': 3, 'B': 5, 'LL': 3, 'RL': 3}
-        elif (T_bonus == 4):
-            self.max_health = {'H': 4, 'LA': 4, 'RA': 4, 'B': 6, 'LL': 4, 'RL': 4}
-        elif (T_bonus >= 5):
-            self.max_health = {'H': 4, 'LA': 4, 'RA': 4, 'B': 7, 'LL': 4, 'RL': 4}
-
-    def set_current_health_to_max(self):
-        self.current_health = {'H': self.max_health['H'],
-                               'LA': self.max_health['LA'],
-                               'RA': self.max_health['RA'],
-                               'B': self.max_health['B'],
-                               'LL': self.max_health['LL'],
-                               'RL': self.max_health['RL']}
-
     def compute_chr_bonus(self, chr_name):
         return int(self.characteristics[chr_name]/10)
 
-# class Health:
-#     def __init__(self, toughness_bonus):
+class Health_Condition:
+    def __init__(self, toughness_bonus, will_power_bonus):
+        self.body = Body(toughness_bonus)
+        self.cold_resistance = toughness_bonus
+        self.poison_resistance = toughness_bonus
+        self.mind_resistance = will_power_bonus
+
+class Body:
+    def __init__(self, toughness_bonus):
+        head = Body_Part('H', toughness_bonus)
+        left_arm = Body_Part('LA', toughness_bonus)
+        right_arm = Body_Part('RA', toughness_bonus)
+        torso = Body_Part('T', toughness_bonus)
+        left_leg = Body_Part('LL', toughness_bonus)
+        right_leg = Body_Part('RL', toughness_bonus)
+
+        self.parts = {'H': head,
+                      'LA': left_arm,
+                      'RA': right_arm,
+                      'T': torso,
+                      'LL': left_leg,
+                      'RL': right_leg}
+
+    def update_body (self, toughness_bonus):
+        for key in self.parts:
+            self.parts[key].update_part_max_health(toughness_bonus)
+
+    def get_hit_or_hill_all_body(self, damage):
+        for key in self.parts:
+            self.parts[key].get_hit_or_heal(damage)
 
 class Body_Part:
     def __init__(self, type, toughness_bonus):
-        self.type = type # 'H', 'LA', 'RA', 'B', 'LL', 'RL'
+        self.type = type # 'H', 'LA', 'RA', 'T', 'LL', 'RL'
         self.max_health = self.compute_max_health(toughness_bonus)
         self.current_health = self.max_health
-        self.critical_injurys = [False, False, False, False]
+        self.critical_injurys = [False, False, False]
 
-    def update_part(self, toughness_bonus):
+    def update_part_max_health(self, toughness_bonus):
         self.max_health = self.compute_max_health(toughness_bonus)
         self.current_health = self.max_health
 
     def compute_max_health(self, toughness_bonus):
-        health_range_body = [2, 3, 4, 5, 6, 7]
-        health_range_other_parts = [1, 1, 2, 3, 4, 5]
-        if(self.type == 'B'):
+        health_range_body = [4, 5, 6, 7, 8]
+        health_range_other_parts = [3, 3, 4, 5, 6]
+        if(self.type == 'T'):
             return health_range_body[toughness_bonus]
         else: # H, RA, LA, LL, RL
             return health_range_other_parts[toughness_bonus]
 
     def get_hit_or_heal(self, damage):
         self.current_health = self.current_health + damage
-        if (self.current_health <= 0):
+        if (self.current_health <= 0): # отметка о критической травме
             self.critical_injurys[self.current_health*(-1)] = True
         if (self.current_health < -2):
             self.current_health = -2
@@ -100,8 +106,19 @@ class Body_Part:
 
 if __name__ == ("__main__"):
     characteristics_0 = {'S': 25, 'A': 25, 'T': 25, 'P': 25, 'I': 25, 'WP': 25, 'C': 25}
-    skills_0 = {"melee_strength": 10, "melee_agility": 10, "shield": 15, "parry": 15, "dodge": -20}
-    talents_0 = set(["quick_strike", "battle dance"])
+    skills_0 = {"melee_strength": 2,
+                "unarmed": 1,
+                "throwing": 2,
+
+                "melee_agility": 2,
+                "bow":1,
+                "shield": 3,
+                "parry": 3,
+                "dodge": 0,
+
+                "firearms": 0}
+    talents_0 = set(["quick_strike",
+                     "battle dance"])
     equipment_0 = {'H': 'none',
                  'B': 'none',
                  'L': 'none',
