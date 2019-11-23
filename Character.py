@@ -1,6 +1,6 @@
 from Dice_Roll import *
 from Common_Consts import *
-from Chrs_Skills_Talents_Traits import *
+from Chrs_Skills_Specializations_Traits import *
 
 class Character:
     def __init__(self, characteristics, skills, talents, equipment):

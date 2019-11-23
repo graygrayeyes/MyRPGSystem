@@ -1,5 +1,12 @@
 import random as rnd
 
+def d20_roll():
+    rnd.seed()
+    return rnd.randint(1, 20)
+
+
+
+'''
 def d100_roll():
     rnd.seed()
     return rnd.randint(1, 100)
@@ -18,3 +25,4 @@ if __name__ == ("__main__"):
     print()
     for i in range(100):
         print(d10_roll())
+'''

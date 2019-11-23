@@ -97,13 +97,20 @@ class SkillS_Set:
             tr_lvls_by_names = external_tr_lvls_by_names
 
         self.skills = {
+
+            # ****** BATTLE skills ******
             "strong_hit": Skill(name="strong_hit", char="S", training_level=tr_lvls_by_names['strong_hit']),
             "accuracy_hit": Skill(name="accuracy_hit", char="A", training_level=tr_lvls_by_names['accuracy_hit'],
                                   advanced=True),
 
             'dodge': Skill(name="dodge", char="A", training_level=tr_lvls_by_names['dodge']),
+                # 'dodge' skill has penalty to avoid distance atack -X; can't dodge firearm atack;
             'parry': Skill(name="parry", char="A", training_level=tr_lvls_by_names['parry']),
+                # need weapon in hand; 'parry' skill has penalty to avoid distance atack -(X+Y);
+                # can't parry firearm atack;
             'shield': Skill(name="shield", char="A", training_level=tr_lvls_by_names['shield']),
+                # need shield in hand; 'shield' skill has NOT penalty to avoid distance atack;
+                # can't block firearm atack;
 
             'throwing': Skill(name="throwing", char="S", training_level=tr_lvls_by_names['throwing']),
                 # throwing knives, throwing axes, javelins, bombs, stones
@@ -112,18 +119,55 @@ class SkillS_Set:
             'firearm': Skill(name="firearm", char="P", training_level=tr_lvls_by_names['firearm'], advanced=True),
                 # pistol, gun, rifle
 
-            'alchemy': Skill(name="alchemy", char="I", training_level=tr_lvls_by_names['alchemy'], advanced=True),
+            # ****** MAGIC USING skills ******
+
+            # ****** SOCIAL skills ******
+            # C!
+            # ****** SURVIVING skills ******
+            # P! T! *(A, S)
+            # plants_mushrooms:
+            #
+            # ****** ANIMAL skills ******
+            # animal_care - C
+            # animal_riding - A
+
+            # ****** CRAFT and PROFESSIONAL skills ******
+            'potions': Skill(name="alchemy", char="I", training_level=tr_lvls_by_names['alchemy'], advanced=True),
+
             'mechanisms': Skill(name="mechanisms", char='I', training_level=tr_lvls_by_names['mechanisms'],
-                                advanced=True, dual_charS=True, second_char = 'A'),
+                                advanced=True, dual_charS=True, second_char='A'),
             'blacksmithing': Skill(name="blacksmithing", char='I', training_level=tr_lvls_by_names['blacksmithing'],
-                                   advanced=True, dual_charS=True, second_char = 'S'),
-            'medicine': Skill(name="medicine", char='I', training_level=tr_lvls_by_names['medicine'],
-                                   advanced=True, dual_charS=True, second_char = 'P'),
-            'magic craft': Skill(name="magic_craft", char='I', training_level=tr_lvls_by_names['magic_craft'],
-                                   advanced=True, dual_charS=True, second_char = 'WP'),
-            'trading': Skill(name="trading", char='I', training_level=tr_lvls_by_names['trading'],
-                                   advanced=True, dual_charS=True, second_char = 'C'),
+                                   advanced=True, dual_charS=True, second_char='S'),
+            'healing': Skill(name="healing", char='I', training_level=tr_lvls_by_names['healing'],
+                                   advanced=True, dual_charS=True, second_char='P'),
+            'games': Skill(name="games", char='I', training_level=tr_lvls_by_names['games'],
+                                   advanced=True, dual_charS=True, second_char='P'),
+            'commerce': Skill(name="commerce", char='C', training_level=tr_lvls_by_names['commerce'],
+                             advanced=True, dual_charS=True, second_char='I'),
             'acting': Skill(name="acting", char='C', training_level=tr_lvls_by_names['acting']),
+            'magic_craft': Skill(name="magic_craft", char='I', training_level=tr_lvls_by_names['magic_craft'],
+                                   advanced=True, dual_charS=True, second_char='WP'), # Enchanting and Identify magic
+            # IT WILL BE REALIZED BY SPELL in particular magic school -
+            # Skill(name="divination", char='WP', training_level=tr_lvls_by_names['divination'],
+            #                        advanced=True, dual_charS=True, second_char='P') # гадание
+            # GO IN SCIENCE -
+            # 'math_logic': Skill(name="math_logic", char="I",
+            #       training_level=tr_lvls_by_names['math_logic'], advanced=True),
+
+            # ****** KNOWLEDGES ******
+            # language_(X): 3-4 present and 2-3 elders unusing now for magic; ALL advanced = True and char = I
+            # basick_knowledge: only one; advanced = False and char = I;
+            # science_knowledge: only one; advanced = True and char = I;
+            #       There are Specializations for particular areas Specializations give bonus for appropriate
+            #       science_knowledge tests and PROFESSIONAL skills (not ALL Specializations)
+            #       * Specializations(bonus_for_skills):
+            #       alchemy (potions), math_logic(commerce, games), physics(mechanisms, blacksmithing),
+            #       biology(animal_care, plants_mushrooms), medicine(healing), linguistics(ALL language_X),
+            #       philosophy, law,  history,
+            # magic_knowledge: only one; advanced = True and char = I;
+            #       There are Specializations by magic schools. They give ability to learn spells.
+            #       Also there is Specialization "artifacts"  giving bonus to skill 'magic_craft'
+            # religion_knowledge: only one; advanced = True and char = I;
         }
 
 '''
