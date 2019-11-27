@@ -58,7 +58,6 @@ class SkillS_Set:
                 tr_lvls_by_names[i] = external_tr_lvls_by_names[i]
 
         self.skills = {
-
             # ****** BATTLE skills ******
             "strong_hit": Skill(name="strong_hit", char="S", training_level=tr_lvls_by_names['strong_hit']),
                 # all melee weapons except rapier
@@ -131,4 +130,4 @@ class SkillS_Set:
             #       There are Specializations by magic schools. They give ability to learn spells.
             #       Also there is Specialization "artifacts"  giving bonus to skill 'magic_craft'
             # religion_knowledge: only one; advanced = True and char = I;
-        }
+            }
