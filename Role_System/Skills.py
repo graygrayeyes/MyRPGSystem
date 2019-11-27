@@ -46,13 +46,12 @@ no_training_human_tr_lvls = {
             'dodge': -1, 'parry': -1, 'shield': -1,
             'throwing': -1, 'ballistics': -1, 'firearm': -1,
 
-            'alchemy': -1, 'mechanisms': -1, 'blacksmithing': -1, 'medicine': -1,
-            'acting art': -1, 'trading': -1, 'magic craft': -1
+            'potions': -1, 'mechanisms': -1, 'blacksmithing': -1, 'healing': -1,
+            'acting': -1, 'games': -1, 'commerce': -1, 'magic_craft': -1
         }
 
 class SkillS_Set:
     def __init__(self, external_tr_lvls_by_names="There isn't external_tr_lvls_by_names"):
-
         tr_lvls_by_names = no_training_human_tr_lvls
         if external_tr_lvls_by_names != "There isn't external_tr_lvls_by_names":
             for i in external_tr_lvls_by_names.keys():
@@ -96,7 +95,7 @@ class SkillS_Set:
             # animal_riding - A
 
             # ****** CRAFT and PROFESSIONAL skills ******
-            'potions': Skill(name="alchemy", char="I", training_level=tr_lvls_by_names['alchemy'], advanced=True),
+            'potions': Skill(name="potions", char="I", training_level=tr_lvls_by_names['potions'], advanced=True),
             'acting': Skill(name="acting", char='C', training_level=tr_lvls_by_names['acting']),
 
             'mechanisms': Skill(name="mechanisms", char='I', training_level=tr_lvls_by_names['mechanisms'],
