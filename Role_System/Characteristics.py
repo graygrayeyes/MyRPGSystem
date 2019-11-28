@@ -1,7 +1,7 @@
 import math
 
 min_human_char_value = 0
-normal_human_char_value = 4
+normal_human_char_value = 5
 max_human_char_value = 12
 
 normal_human_chars_values = {'S': normal_human_char_value, # strength
