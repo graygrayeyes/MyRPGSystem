@@ -1,18 +1,15 @@
 basic_skill_offset = 0
-advanced_skill_offset = 0
+advanced_skill_offset = 1
 min_human_skill_tr_level = -1
 max_human_basic_skill_tr_level = 6
 max_human_advanced_skill_tr_level = max_human_basic_skill_tr_level + (advanced_skill_offset - basic_skill_offset)
 
-
 class Skill:
     def __init__(self, name, char, training_level=min_human_skill_tr_level,
-                 advanced=False, dual_charS=False, second_char="not used var second_char"):
+                 advanced=False, secondary_char=False):
         self.name = name
         self.char = char
-        self.dual_charS = dual_charS
-        if self.dual_charS == True:
-            self.second_char = second_char
+        self.secondary_char = secondary_char
         self.training_level = training_level
         self.advanced = advanced
 
@@ -98,17 +95,17 @@ class SkillS_Set:
             'acting': Skill(name="acting", char='C', training_level=tr_lvls_by_names['acting']),
 
             'mechanisms': Skill(name="mechanisms", char='I', training_level=tr_lvls_by_names['mechanisms'],
-                                advanced=True, dual_charS=True, second_char='A'),
+                                advanced=True, secondary_char='A'),
             'blacksmithing': Skill(name="blacksmithing", char='I', training_level=tr_lvls_by_names['blacksmithing'],
-                                   advanced=True, dual_charS=True, second_char='S'),
+                                   advanced=True, secondary_char='S'),
             'healing': Skill(name="healing", char='I', training_level=tr_lvls_by_names['healing'],
-                                   advanced=True, dual_charS=True, second_char='P'),
+                             advanced=True, secondary_char='P'),
             'games': Skill(name="games", char='I', training_level=tr_lvls_by_names['games'],
-                                   advanced=True, dual_charS=True, second_char='P'),
+                           advanced=True, secondary_char='P'),
             'commerce': Skill(name="commerce", char='C', training_level=tr_lvls_by_names['commerce'],
-                             advanced=True, dual_charS=True, second_char='I'),
+                              advanced=True, secondary_char='I'),
             'magic_craft': Skill(name="magic_craft", char='I', training_level=tr_lvls_by_names['magic_craft'],
-                                   advanced=True, dual_charS=True, second_char='WP'), # Enchanting and Identify magic
+                                 advanced=True, secondary_char='WP'), # Enchanting and Identify magic
             # IT WILL BE REALIZED BY SPELL in particular magic school -
             # Skill(name="divination", char='WP', training_level=tr_lvls_by_names['divination'],
             #                        advanced=True, dual_charS=True, second_char='P') # гадание

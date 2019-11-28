@@ -20,6 +20,7 @@ class Character:
         self.health_condition = Health_Condition(endurance_modifier=self.chars.get_characteristic_modifier('E'),
                                                 will_power_modifier=self.chars.get_characteristic_modifier('WP'))
 
+
 if __name__ == '__main__':
     test_character = Character('Marvin', {'S': 5, 'A': 6, 'E': 5, 'P': 6, 'I': 7, 'WP': 4, 'C': 5})
     test_character.health_condition.other_hp_hit_or_heal(-3, 'poison_hp')

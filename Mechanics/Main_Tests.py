@@ -14,13 +14,5 @@ def do_opposed_test(skill_val_1, skill_val_2, difficult_modifier_1=0, difficult_
     opposed_delta = result_1[0] - result_2[0]
     return [opposed_delta, result_1[0], result_1[1], result_2[0], result_2[1]]
 
-def do_hidden_attack_test(attack_skill_val_A, perception_val_D, difficult_modifier_A=0, difficult_modifier_D=0):
-    if do_main_test(perception_val_D, difficult_modifier_D) >= 0:
-        return 'attack was detected'
-    else:
-        return do_main_test(attack_skill_val_A, difficult_modifier_A)
 
-
-def do_attack_opposed_test(skill_val_1, skill_val_2, difficult_modifier_1=0, difficult_modifier_2=0):
-    result = do_opposed_test(skill_val_1, skill_val_2, difficult_modifier_1, difficult_modifier_2)
 
