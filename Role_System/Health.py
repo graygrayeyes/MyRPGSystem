@@ -20,7 +20,7 @@ class Body_Part:
             return endurance_modifier
 
     def get_hit_or_heal(self, damage):
-        self.current_health = self.current_health + damage
+        self.current_health = self.current_health - damage
         if (self.current_health < -2):
             self.current_health = -2
         elif (self.current_health > self.max_health):
@@ -49,11 +49,49 @@ class Body:
             self.parts[key].get_hit_or_heal(damage)
 
 
+endurance_hp_offset = 0
+mind_hp_offset = 0
+
+
 class Health_Condition:
     def __init__(self, endurance_modifier, will_power_modifier):
         self.body = Body(endurance_modifier)
-        self.cold_resistance = endurance_modifier
-        self.poison_resistance = endurance_modifier
-        self.mind_resistance = will_power_modifier
+
+        self.max_endurance_hp = endurance_modifier + endurance_hp_offset
+        self.max_mind_hp = will_power_modifier + mind_hp_offset
+
+        self.hp_types = {'bleed_hp': endurance_modifier,
+                         'cold_hp': endurance_modifier,
+                         'poison_hp': endurance_modifier,
+                         'mind_hp': will_power_modifier}
+
+    def update_endurance_hp(self, endurance_modifier):
+        self.max_endurance_hp = endurance_modifier + endurance_hp_offset
+        self.hp_types = {'bleed_hp': endurance_modifier,
+                         'cold_hp': endurance_modifier,
+                         'poison_hp': endurance_modifier,
+                         'mind_hp':  self.max_mind_hp}
+
+    def update_mind_hp(self, will_power_modifier):
+        self.max_mind_hp = will_power_modifier + mind_hp_offset
+        self.hp_types['mind_hp'] = self.max_mind_hp
+
+    def other_hp_hit_or_heal(self, damage, hp_type):
+        if(hp_type == 'mind_hp'):
+            self.hp_types[hp_type] = self.hp_types[hp_type] - damage
+            if (self.hp_types[hp_type] < 0):
+                self.hp_types[hp_type] = 0
+            elif self.hp_types[hp_type] > self.max_mind_hp:
+                self.hp_types[hp_type] = self.max_mind_hp
+        else: # bleed_hp, cold_hp, poison_hp
+            self.hp_types[hp_type] = self.hp_types[hp_type] - damage
+            if (self.hp_types[hp_type] < 0):
+                self.hp_types[hp_type] = 0
+            elif self.hp_types[hp_type] > self.max_endurance_hp:
+                self.hp_types[hp_type] = self.max_endurance_hp
+
+
+
+
 
 

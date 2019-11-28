@@ -22,4 +22,5 @@ class Character:
 
 if __name__ == '__main__':
     test_character = Character('Marvin', {'S':5, 'A':6, 'E':5, 'P':6, 'I':7, 'WP':4, 'C':5})
+    test_character.health_condition.other_hp_hit_or_heal(-3, 'poison_hp')
     print('end')

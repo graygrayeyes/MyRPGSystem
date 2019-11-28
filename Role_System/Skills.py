@@ -1,5 +1,5 @@
 basic_skill_offset = 0
-advanced_skill_offset = 1
+advanced_skill_offset = 0
 min_human_skill_tr_level = -1
 max_human_basic_skill_tr_level = 6
 max_human_advanced_skill_tr_level = max_human_basic_skill_tr_level + (advanced_skill_offset - basic_skill_offset)
